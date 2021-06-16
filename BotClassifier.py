@@ -4,16 +4,11 @@ Created on Tue Jun 15 15:02:23 2021
 
 @author: barre
 """
-import twitter
 import json 
 import tweepy
-import os
 import pandas as pd
-import snscrape
-import numpy as np
 import joblib
 import shap
-import json as js
 
 
 # Authenticate to Twitter
@@ -70,8 +65,8 @@ ConsideredFeatures=['statuses_count','followers_count','favourites_count', 'frie
 
 def findbot(name) :
     '''Also works with the id'''
-    json=api.get_user(name)._json
-    df=pd.DataFrame.from_dict(json, orient='index').T
+    data=api.get_user(name)._json
+    df=pd.DataFrame.from_dict(data, orient='index').T
     df['age']=df['created_at'].apply(Age)
     df=df[ConsideredFeatures]
     df=augmentdf(df)
@@ -79,5 +74,5 @@ def findbot(name) :
     shap_values=explainer.shap_values(df)
     rounded=[round(i,3) for i in shap_values[1][0]]
     dic=dict(zip(df.columns, rounded))
-    return(round(model.predict_proba(df)[0][1],3), js.dumps(dic))
+    return(round(model.predict_proba(df)[0][1],3), json.dumps(dic))
     #print(df)

@@ -1,4 +1,3 @@
-json
 tweepy
 joblib
 pandas

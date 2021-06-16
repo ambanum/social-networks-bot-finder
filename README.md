@@ -1,2 +1,6 @@
 # social-networks-bot-finder
-A classifier for twitter bot accounts
+
+
+A simple classifier for twitter bot accounts based on Random Forest Algorithm
+
+Do 'pip install -r requirements.txt' to install needed packages

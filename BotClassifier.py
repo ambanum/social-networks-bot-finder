@@ -10,17 +10,6 @@ import pandas as pd
 import joblib
 import shap
 
-
-# Authenticate to Twitter
-auth = tweepy.OAuthHandler("2haTs0eOBQKV7CpdhT3Vpnf1I", "yahuYim2xI9N8TnThWlp8ju9uPuR81NZl7ld3uoNCbgNJTu7aS")
-auth.set_access_token("269735698-Zvzvhbi22hYsQeojrxV9SJ2x0X1Fgx1oW60xsa8w","LU02ycbCWvnJR12UsSlHob5Dd1mzmd9FPgLMlyplE90EF")
-api = tweepy.API(auth, wait_on_rate_limit_notify = True, wait_on_rate_limit=True)
-try:
-    api.verify_credentials()
-    print("Authentication OK")
-except:
-    print("Error during authentication")
-
 model=joblib.load('./random_forest.joblib')
 explainer=shap.TreeExplainer(model)
 

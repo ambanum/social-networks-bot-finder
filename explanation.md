@@ -1,5 +1,3 @@
-# Explanation
+# What is the bot probability score ?
 
-## What for ?
-
-## How it's work ?
+We will soon explain here how we calculate the score.

@@ -59,7 +59,7 @@ def findbot(name) :
     '''Also works with the id'''
     #data=api.get_user(name)._json
     #df=pd.DataFrame.from_dict(data, orient='index').T
-    os.system('snscrape --with-entity --max-results 0 --jsonl twitter-user martinratinaud > user.json')
+    os.system(f'snscrape --with-entity --max-results 0 --jsonl twitter-user {name} > user.json')
     df = pd.read_json('user.json',  lines = True)
     df.rename(columns = dicSnscrapeToAPI, inplace = True)
     df['profile_use_background_image']=True
@@ -77,6 +77,6 @@ def findbot(name) :
 
 import argparse
 parser = argparse.ArgumentParser()
-parser.add_argument("name", help="Return the probability that an account is a bot")
+parser.add_argument('name', help="Return the probability that an account is a bot")
 args = parser.parse_args()
-print(findbot(args))
+print(findbot(args.name))

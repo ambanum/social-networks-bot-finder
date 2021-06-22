@@ -8,11 +8,18 @@ import json
 import tweepy
 import pandas as pd
 import joblib
-import shap
+import os
+from shap import TreeExplainer
 
 model=joblib.load('./random_forest.joblib')
-explainer=shap.TreeExplainer(model)
+explainer=TreeExplainer(model)
 
+dicSnscrapeToAPI={'username' : 'name', 'displayname' : 'screen_name', 'created' : 'created_at', 'followersCount' : 'followers_count', 'friendsCount' : 'friends_count', 'statusesCount' : 'statuses_count',
+                  'favouritesCount' : 'favourites_count', 'listedCount' : 'listed_count'}
+
+ConsideredFeatures=['statuses_count','followers_count','favourites_count', 'friends_count', 'listed_count',
+                   'default_profile', 'profile_use_background_image', 'verified', 'age', 'name', 'screen_name',
+                   'description']
 
 def Age(date):
     u=pd.Timestamp(date, tz=None)
@@ -48,20 +55,28 @@ def augmentdf(df):
     output['description_length']=df['description'].apply(length)
     return(output)
 
-ConsideredFeatures=['statuses_count','followers_count','favourites_count', 'friends_count', 'listed_count',
-                   'default_profile', 'profile_use_background_image', 'verified', 'age', 'name', 'screen_name',
-                   'description']
-
 def findbot(name) :
     '''Also works with the id'''
-    data=api.get_user(name)._json
-    df=pd.DataFrame.from_dict(data, orient='index').T
+    #data=api.get_user(name)._json
+    #df=pd.DataFrame.from_dict(data, orient='index').T
+    os.system('snscrape --with-entity --max-results 0 --jsonl twitter-user martinratinaud > user.json')
+    df = pd.read_json('user.json',  lines = True)
+    df.rename(columns = dicSnscrapeToAPI, inplace = True)
+    df['profile_use_background_image']=True
+    df['default_profile']=False
     df['age']=df['created_at'].apply(Age)
     df=df[ConsideredFeatures]
     df=augmentdf(df)
     df=df.drop(columns=['description', 'name', 'screen_name'])
-    shap_values=explainer.shap_values(df)
+    features=df
+    shap_values=explainer.shap_values(features)
     rounded=[round(i,3) for i in shap_values[1][0]]
-    dic=dict(zip(df.columns, rounded))
-    return(round(model.predict_proba(df)[0][1],3), json.dumps(dic))
-    #print(df)
+    dic=dict(zip(features.columns, rounded))
+    return(round(model.predict_proba(features)[0][1],3), json.dumps(dic))
+
+
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("name", help="Return the probability that an account is a bot")
+args = parser.parse_args()
+print(findbot(args))

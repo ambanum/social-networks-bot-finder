@@ -4,6 +4,7 @@ Created on Tue Jun 15 15:02:23 2021
 
 @author: barre
 """
+import sys 
 import json 
 import tweepy
 import pandas as pd
@@ -11,6 +12,8 @@ import joblib
 import os
 from shap import TreeExplainer
 import ast 
+import base64
+import click
 
 model=joblib.load('./random_forest.joblib')
 explainer=TreeExplainer(model)
@@ -56,12 +59,7 @@ def augmentdf(df):
     output['description_length']=df['description'].apply(length)
     return(output)
 
-def findbot(name) :
-    '''Also works with the id'''
-    #data=api.get_user(name)._json
-    #df=pd.DataFrame.from_dict(data, orient='index').T
-    os.system(f'snscrape --with-entity --max-results 0 --jsonl twitter-user {name} > user.json')
-    df = pd.read_json('user.json',  lines = True)
+def isBot(df) :
     df.rename(columns = dicSnscrapeToAPI, inplace = True)
     df['profile_use_background_image']=True
     df['default_profile']=False
@@ -78,55 +76,45 @@ def findbot(name) :
         "botScore": botScore,
         "details": dic
     })
+
+def findbot(name) :
+    '''Also works with the id'''
+    os.system(f'snscrape --with-entity --max-results 0 --jsonl twitter-user {name} > user.json')
+    df = pd.read_json('user.json',  lines = True)
+    return isBot(df)
 
 def findbot_filename(filename) :
     df=pd.read_json(f'{filename}.json',  lines = True)
-    df.rename(columns = dicSnscrapeToAPI, inplace = True)
-    df['profile_use_background_image']=True
-    df['default_profile']=False
-    df['age']=df['created_at'].apply(Age)
-    df=df[ConsideredFeatures]
-    df=augmentdf(df)
-    df=df.drop(columns=['description', 'name', 'screen_name'])
-    features=df
-    shap_values=explainer.shap_values(features)
-    rounded=[round(i,3) for i in shap_values[1][0]]
-    dic=dict(zip(features.columns, rounded))
-    botScore=round(model.predict_proba(features)[0][1],3)
-    return json.dumps({
-        "botScore": botScore,
-        "details": dic
-    })
+    return isBot(df)
 
-def findbot_json(rawjson) :
+def findbot_rawjson(rawjson) :
     js=json.loads(rawjson)
-    df=pd.DataFrame.from_dict(js)
-    df.rename(columns = dicSnscrapeToAPI, inplace = True)
-    df['profile_use_background_image']=True
-    df['default_profile']=False
-    df['age']=df['created_at'].apply(Age)
-    df=df[ConsideredFeatures]
-    df=augmentdf(df)
-    df=df.drop(columns=['description', 'name', 'screen_name'])
-    features=df
-    shap_values=explainer.shap_values(features)
-    rounded=[round(i,3) for i in shap_values[1][0]]
-    dic=dict(zip(features.columns, rounded))
-    botScore=round(model.predict_proba(features)[0][1],3)
-    return json.dumps({
-        "botScore": botScore,
-        "details": dic
-    })
+    df=pd.DataFrame.from_dict(js, orient='index').T
+    return isBot(df)
 
 import argparse
 parser = argparse.ArgumentParser()
-parser.add_argument('--json', dest='json', default=False, action='store_true', help="If added this will use a json as an entry")
+parser.add_argument('--rawJsonBase64',action="store", help="If added this will use a json as an entry")
 parser.add_argument('--jsonfile', dest='jsonfile', default=False, action='store_true', help="If added this will use a json file name as an entry")
 parser.add_argument('name', help="Return the probability that the account bearing this name (or this snscrape description if --json is added) is a bot")
 args = parser.parse_args()
-if args.json :
-    print(findbot_json(args.name))
+
+if args.rawJsonBase64 :
+    print(findbot_rawjson(base64.b64decode(args.rawJsonBase64).decode("utf-8")))
 if args.jsonfile :
     print(findbot_filename(args.name))
 else :
     print(findbot(args.name))
+
+
+# @click.command()
+# @click.option('--rawjson', help='number of greetings')
+# @click.argument('name')
+
+# def cli(rawjson,name):
+#     """Simple program that greets NAME for a total of COUNT times."""
+#     print(rawjson)
+#     print(name)
+
+# if __name__ == '__main__':
+#     cli()

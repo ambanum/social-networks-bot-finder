@@ -2,3 +2,4 @@ tweepy
 joblib
 pandas
 shap
+click

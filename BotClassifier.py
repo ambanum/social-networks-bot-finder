@@ -10,6 +10,7 @@ import pandas as pd
 import joblib
 import os
 from shap import TreeExplainer
+import ast 
 
 model=joblib.load('./random_forest.joblib')
 explainer=TreeExplainer(model)
@@ -78,9 +79,31 @@ def findbot(name) :
         "details": dic
     })
 
+def findbotjson(filename) :
+    df=pd.read_json(f'{filename}.json',  lines = True)
+    df.rename(columns = dicSnscrapeToAPI, inplace = True)
+    df['profile_use_background_image']=True
+    df['default_profile']=False
+    df['age']=df['created_at'].apply(Age)
+    df=df[ConsideredFeatures]
+    df=augmentdf(df)
+    df=df.drop(columns=['description', 'name', 'screen_name'])
+    features=df
+    shap_values=explainer.shap_values(features)
+    rounded=[round(i,3) for i in shap_values[1][0]]
+    dic=dict(zip(features.columns, rounded))
+    botScore=round(model.predict_proba(features)[0][1],3)
+    return json.dumps({
+        "botScore": botScore,
+        "details": dic
+    })
 
 import argparse
 parser = argparse.ArgumentParser()
-parser.add_argument('name', help="Return the probability that an account is a bot")
+parser.add_argument('--json', dest='json', default=False, action='store_true', help="If added this will use a json as an entry")
+parser.add_argument('name', help="Return the probability that the account bearing this name (or this snscrape description if --json is added) is a bot")
 args = parser.parse_args()
-print(findbot(args.name))
+if args.json :
+    print(findbotjson(args.name))
+else :
+    print(findbot(args.name))

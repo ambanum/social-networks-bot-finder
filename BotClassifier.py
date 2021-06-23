@@ -72,7 +72,11 @@ def findbot(name) :
     shap_values=explainer.shap_values(features)
     rounded=[round(i,3) for i in shap_values[1][0]]
     dic=dict(zip(features.columns, rounded))
-    return(round(model.predict_proba(features)[0][1],3), json.dumps(dic))
+    botScore=round(model.predict_proba(features)[0][1],3)
+    return json.dumps({
+        "botScore": botScore,
+        "details": dic
+    })
 
 
 import argparse

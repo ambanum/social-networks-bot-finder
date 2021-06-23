@@ -13,6 +13,10 @@ Do `pip install -r requirements.txt` to install needed packages
 To get the bot score probability of a user account, simply launch
 
 ```
+./bot-finder username
+
+# which is equivalent to
+
 python3 BotClassifier.py username
 ```
 

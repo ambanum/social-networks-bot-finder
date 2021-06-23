@@ -2,7 +2,9 @@
 
 A simple classifier for twitter bot accounts based on Random Forest Algorithm
 
-# install
+See our [Methodology](./explanation.md) for bot detection
+
+# Install
 
 Do `pip install -r requirements.txt` to install needed packages
 
@@ -14,7 +16,7 @@ To get the bot score probability of a user account, simply launch
 python3 BotClassifier.py username
 ```
 
-## example
+## Example
 
 ```
 python3 BotClassifier.py ambnum

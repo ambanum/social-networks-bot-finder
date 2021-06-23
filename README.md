@@ -10,21 +10,26 @@ Do `pip install -r requirements.txt` to install needed packages
 
 # Usage
 
-To get the bot score probability of a user account, simply launch
+To get the bot score probability of a user account, you can do so
 
 ```
-./bot-finder username
-```
+# by username: this will use snscrape to get the data
+./bot-finder.py --name username
 
-or 
-```
-python3 BotClassifier.py username
+# by user data you just got from snscrape
+SNSCRAPE_USER=$(snscrape --with-entity --max-results 0 --jsonl twitter-user username)
+echo "./bot-finder.py --rawjson '$SNSCRAPE_USER'"
+# -> and launch the result of this command
+
+# by user data you just got from snscrape and stored into a file
+./bot-finder.py --jsonfile ./filepath.json
+
 ```
 
 ## Example
 
 ```
-python3 BotClassifier.py ambnum
+./bot-finder.py --name ambnum
 ```
 
 will return
@@ -71,7 +76,6 @@ pip install --upgrade pip
 pip install Cython
 pip install numpy --no-use-pep517
 pip install pandas
-pip install tweepy
 pip install joblib
 pip install shap
 ```

@@ -1,4 +1,4 @@
-joblib
-pandas
-shap
-click
+click==8.0.1
+joblib==1.0.1
+pandas==1.2.5
+shap==0.39.0

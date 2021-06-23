@@ -79,8 +79,28 @@ def findbot(name) :
         "details": dic
     })
 
-def findbotjson(filename) :
+def findbot_filename(filename) :
     df=pd.read_json(f'{filename}.json',  lines = True)
+    df.rename(columns = dicSnscrapeToAPI, inplace = True)
+    df['profile_use_background_image']=True
+    df['default_profile']=False
+    df['age']=df['created_at'].apply(Age)
+    df=df[ConsideredFeatures]
+    df=augmentdf(df)
+    df=df.drop(columns=['description', 'name', 'screen_name'])
+    features=df
+    shap_values=explainer.shap_values(features)
+    rounded=[round(i,3) for i in shap_values[1][0]]
+    dic=dict(zip(features.columns, rounded))
+    botScore=round(model.predict_proba(features)[0][1],3)
+    return json.dumps({
+        "botScore": botScore,
+        "details": dic
+    })
+
+def findbot_json(rawjson) :
+    js=json.loads(rawjson)
+    df=pd.DataFrame.from_dict(js)
     df.rename(columns = dicSnscrapeToAPI, inplace = True)
     df['profile_use_background_image']=True
     df['default_profile']=False
@@ -101,9 +121,12 @@ def findbotjson(filename) :
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('--json', dest='json', default=False, action='store_true', help="If added this will use a json as an entry")
+parser.add_argument('--jsonfile', dest='jsonfile', default=False, action='store_true', help="If added this will use a json file name as an entry")
 parser.add_argument('name', help="Return the probability that the account bearing this name (or this snscrape description if --json is added) is a bot")
 args = parser.parse_args()
 if args.json :
-    print(findbotjson(args.name))
+    print(findbot_json(args.name))
+if args.jsonfile :
+    print(findbot_filename(args.name))
 else :
     print(findbot(args.name))

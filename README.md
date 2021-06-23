@@ -14,6 +14,42 @@ To get the bot score probability of a user account, simply launch
 python3 BotClassifier.py username
 ```
 
+## example
+
+```
+python3 BotClassifier.py ambnum
+```
+
+will return
+
+```json
+{
+  "botScore": 0.14,
+  "details": {
+    "statuses_count": -0.08,
+    "followers_count": -0.195,
+    "favourites_count": 0.009,
+    "friends_count": -0.036,
+    "listed_count": -0.153,
+    "default_profile": -0.041,
+    "profile_use_background_image": 0,
+    "verified": 0.013,
+    "age": -0.003,
+    "tweet_frequence": -0.013,
+    "followers_growth_rate": -0.019,
+    "friends_growth_rate": 0,
+    "listed_growth_rate": -0.068,
+    "friends_followers_ratio": -0.009,
+    "followers_friend_ratio": -0.004,
+    "name_length": -0.001,
+    "screenname_length": 0,
+    "name_digits": -0,
+    "screen_name_digits": -0.002,
+    "description_length": -0.009
+  }
+}
+```
+
 # Troubleshooting
 
 ## Illegal instruction: 4

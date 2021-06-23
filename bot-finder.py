@@ -2,7 +2,6 @@
 
 
 import click
-import os
 from bot_classifier import findbot, findbot_rawjson, findbot_filename
 
 
@@ -25,7 +24,9 @@ def cli(rawjson, username, jsonfile):
     elif jsonfile:
         print(findbot_filename(jsonfile))
     else:
-        os.system("./bot-finder.py --help")
+        ctx = click.get_current_context()
+        click.echo(ctx.get_help())
+        ctx.exit()
 
 
 if __name__ == "__main__":

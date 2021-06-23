@@ -14,9 +14,10 @@ To get the bot score probability of a user account, simply launch
 
 ```
 ./bot-finder username
+```
 
-# which is equivalent to
-
+or 
+```
 python3 BotClassifier.py username
 ```
 
@@ -60,7 +61,7 @@ will return
 
 ## Illegal instruction: 4
 
-If for any reason, simply installing the required package is not enough to launch the command and you get errors, you can try and setup a virtual env
+If your installation fail you may try to launch a virtual environment :
 
 ```
 pip3 install virtualenv
@@ -75,4 +76,4 @@ pip install joblib
 pip install shap
 ```
 
-then try again
+And try to install again.

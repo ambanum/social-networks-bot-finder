@@ -6,7 +6,40 @@ See our [Methodology](./explanation.md) for bot detection
 
 # Install
 
-Do `pip install -r requirements.txt` to install needed packages
+```
+git clone https://github.com/ambanum/social-networks-bot-finder
+cd social-networks-bot-finder
+```
+
+## Virtual env
+
+We strongly recommend that you use a virtual env for any development in python
+
+For this
+
+```
+pip3 install virtualenv
+virtualenv -p python3 social-networks-bot-finder
+source social-networks-bot-finder/bin/activate
+```
+
+## for common usage
+
+If you do not want to develop but just use the software, do
+
+```
+./build.sh
+```
+
+Then you can use `botfinder` as an executable command
+
+## for development
+
+```
+pip3 install -r requirements.txt
+```
+
+Then you can use `./botfinder-dev.py` as an executable command
 
 # Usage
 
@@ -14,22 +47,22 @@ To get the bot score probability of a user account, you can do so
 
 ```
 # by username: this will use snscrape to get the data
-./bot-finder.py --name username
+botfinder --name username
 
 # by user data you just got from snscrape
 SNSCRAPE_USER=$(snscrape --with-entity --max-results 0 --jsonl twitter-user username)
-echo "./bot-finder.py --rawjson '$SNSCRAPE_USER'"
+echo "botfinder --rawjson '$SNSCRAPE_USER'"
 # -> and launch the result of this command
 
 # by user data you just got from snscrape and stored into a file
-./bot-finder.py --jsonfile ./filepath.json
+botfinder --jsonfile ./filepath.json
 
 ```
 
 ## Example
 
 ```
-./bot-finder.py --name ambnum
+botfinder --name ambnum
 ```
 
 will return
@@ -66,18 +99,11 @@ will return
 
 ## Illegal instruction: 4
 
-If your installation fail you may try to launch a virtual environment :
+If your installation fail, it might be because you're not using a virtual environment :
 
 ```
 pip3 install virtualenv
-virtualenv -p python3 venv
-source venv/bin/activate
-pip install --upgrade pip
-pip install Cython
-pip install numpy --no-use-pep517
-pip install pandas
-pip install joblib
-pip install shap
+virtualenv -p python3 social-networks-bot-finder
+source social-networks-bot-finder/bin/activate
+./build.sh
 ```
-
-And try to install again.

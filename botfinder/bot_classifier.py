@@ -10,9 +10,7 @@ import joblib
 import os
 from shap import TreeExplainer
 
-__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
-
-model = joblib.load(__location__ + "/random_forest.joblib")
+model = joblib.load("botfinder/random_forest.joblib")
 explainer = TreeExplainer(model)
 
 dicSnscrapeToAPI = {

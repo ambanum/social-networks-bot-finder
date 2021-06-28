@@ -2,7 +2,7 @@
 
 
 import click
-from bot_classifier import findbot, findbot_rawjson, findbot_filename
+from botfinder.bot_classifier import findbot, findbot_rawjson, findbot_filename
 
 
 @click.command()
@@ -15,7 +15,7 @@ from bot_classifier import findbot, findbot_rawjson, findbot_filename
 @click.option(
     "--jsonfile", required=False, help="a json file path containing a snscrape user "
 )
-def cli(rawjson, username, jsonfile):
+def main(rawjson, username, jsonfile):
     """Command line utility to estimate the probability of a twitter user to be a bot"""
     if rawjson:
         print(findbot_rawjson(rawjson))
@@ -30,4 +30,4 @@ def cli(rawjson, username, jsonfile):
 
 
 if __name__ == "__main__":
-    cli()
+    main()

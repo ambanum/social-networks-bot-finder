@@ -6,7 +6,7 @@ We consider as a bot the accounts marked as so in the bot repository of the Indi
 
 # How does the bot probability score work ?
 
-To compute the probability for an account to be a bot, we train a Random Forest classifier on the data aggregated from the bot repository.
+To compute the probability for an account to be a bot, we train a Random Forest classifier on the data aggregated from the bot repository, which is available (as a csv file) in DatasetConsolidated.zip in this repository.
 
 We use 21 different features : 
 - statuses_count : the number of statuses (tweets) posted by the account 

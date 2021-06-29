@@ -2,13 +2,14 @@ import setuptools
 
 # https://www.freecodecamp.org/news/build-your-first-python-package/
 
-VERSION = "0.0.4"
+exec(open('botfinder/version.py').read())
+
 DESCRIPTION = "CLI tool to help detecting if a twitter account is a bot"
 
 setuptools.setup(
     name="social-networks-bot-finder",
     description=DESCRIPTION,
-    version=VERSION,
+    version=__version__,
     author="Ambanum",
     url="https://github.com/ambanum/social-networks-bot-finder",
     classifiers=[

@@ -10,6 +10,7 @@ import joblib
 import os
 import tempfile
 from shap import TreeExplainer
+import datetime
 
 tmp_directory = tempfile.gettempdir()
 package_directory = os.path.dirname(os.path.abspath(__file__))
@@ -54,17 +55,12 @@ def Age(date):
 
 
 def length(string):
-    try:
-        return len(string)
-    except TypeError:
-        return 0
+    return len(string)
+
 
 
 def nbdigits(string):
-    try:
-        return sum(c.isdigit() for c in string)
-    except:
-        print(string)
+    return sum(c.isdigit() for c in string)
 
 
 def augmentdf(df):
@@ -72,7 +68,7 @@ def augmentdf(df):
     output["tweet_frequence"] = df["statuses_count"] / df["age"]
     output["followers_growth_rate"] = df["followers_count"] / df["age"]
     output["friends_growth_rate"] = df["friends_count"] / df["age"]
-    output["friends_growth_rate"] = df["favourites_count"] / df["age"]
+    output["favourites_growth_rate"] = df["favourites_count"] / df["age"]
     output["listed_growth_rate"] = df["listed_count"] / df["age"]
     output["friends_followers_ratio"] = df["friends_count"] / (
         df["followers_count"] + 1
@@ -91,26 +87,29 @@ def isBot(df):
     df["profile_use_background_image"] = True
     df["default_profile"] = False
     df["age"] = df["created_at"].apply(Age)
-    df = df[ConsideredFeatures]
-    df = augmentdf(df)
-    df = df.drop(columns=["description", "name", "screen_name"])
-    features = df
+    features = df[ConsideredFeatures]
+    features = augmentdf(features)
+    features = features.drop(columns=["description", "name", "screen_name"])
     shap_values = explainer.shap_values(features)
     rounded = [round(i, 3) for i in shap_values[1][0]]
     dic = dict(zip(features.columns, rounded))
+    dic['base_value'] = explainer.expected_value[1]
+
     botScore = round(model.predict_proba(features)[0][1], 3)
     return json.dumps({"botScore": botScore, "details": dic})
 
 
 def findbot(name):
     """Also works with the id"""
+    
     tmp_file = tmp_directory + "/user.json"
     os.system(
         f"snscrape --with-entity --max-results 0 --jsonl twitter-user {name} > {tmp_file}"
     )
     df = pd.read_json(tmp_file, lines=True)
     os.remove(tmp_file)
-    return isBot(df)
+    t0=datetime.datetime.now()
+    return isBot(df), datetime.datetime.now()-t0
 
 
 def findbot_filename(filename):

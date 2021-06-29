@@ -2,12 +2,9 @@ import setuptools
 
 # https://www.freecodecamp.org/news/build-your-first-python-package/
 
-VERSION = "0.0.1"
+VERSION = "0.0.4"
 DESCRIPTION = "CLI tool to help detecting if a twitter account is a bot"
 
-with open('requirements.txt') as f:
-    required = f.read().splitlines()
-    
 setuptools.setup(
     name="social-networks-bot-finder",
     description=DESCRIPTION,
@@ -22,8 +19,17 @@ setuptools.setup(
     ],
     packages=["botfinder"],
     setup_requires=["setuptools_scm"],
-    use_scm_version=True,
-    install_requires=required,
+    use_scm_version=False,
+    include_package_data=True,
+    install_requires=[
+        "click==8.0.1",
+        "joblib==1.0.1",
+        "pandas==1.2.5",
+        "shap==0.39.0",
+    ],
+    dependency_links=[
+        "git+https://github.com/JustAnotherArchivist/snscrape.git"
+    ],
     python_requires="~=3.8",
     extras_require={
         "test": ["coverage"],

@@ -158,3 +158,11 @@ virtualenv -p python3 social-networks-bot-finder
 source social-networks-bot-finder/bin/activate
 ./build.sh
 ```
+
+## ERROR: Could not detect requirement name...
+
+```
+ERROR: Could not detect requirement name for 'git+https://github.com/JustAnotherArchivist/snscrape.git', please specify one with #egg=your_package_name
+```
+In requirements.txt file, you have to add `#egg=your_package_name` to github repository url.
+In this case, replace `git+https://github.com/JustAnotherArchivist/snscrape.git`by `git+https://github.com/JustAnotherArchivist/snscrape.git#egg=snscrape`

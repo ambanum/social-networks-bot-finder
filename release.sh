@@ -28,5 +28,5 @@ git add botfinder/version.py
 git commit -m "Version $NEW_VERSION"
 git tag -a v$NEW_VERSION -m "Version $NEW_VERSION"
 
-# python setup.py sdist bdist_wheel
-# twine upload dist/*
+python setup.py sdist bdist_wheel
+twine upload dist/*

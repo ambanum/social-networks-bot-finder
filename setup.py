@@ -4,11 +4,9 @@ import setuptools
 
 exec(open('botfinder/version.py').read())
 
-DESCRIPTION = "CLI tool to help detecting if a twitter account is a bot"
-
 setuptools.setup(
     name="social-networks-bot-finder",
-    description=DESCRIPTION,
+    description="CLI tool to help detecting if a twitter account is a bot",
     version=__version__,
     author="Ambanum",
     url="https://github.com/ambanum/social-networks-bot-finder",

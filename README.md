@@ -116,8 +116,16 @@ will return
 # Deployment
 
 This package is deployed on pypi as a package named `social-networks-bot-finder`. So that it can be installed using pip
+We are using `twine` for this
+
+```
+pip install twine
+npm install -g semver # for consistent package number generation
+```
 
 ## Authentication on pyPi
+
+In order to not set your username and password again and again, you can set them using thos
 
 ```
 keyring set https://upload.pypi.org/legacy/ username
@@ -125,9 +133,18 @@ keyring set https://upload.pypi.org/legacy/ username
 
 ## Deploy a new release
 
+A new release should come with a new version
+We are using semver to generate consistent package number
+
 ```
 ./release.sh
+# org
+./release.sh patch # for small fixes
+./release.sh minor # for minor features
+./release.sh major # for breaking changes
 ```
+
+This will bum the version in `botfinder/version.py` and create a git tag
 
 # Troubleshooting
 

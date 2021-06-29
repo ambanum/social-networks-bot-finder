@@ -4,14 +4,32 @@ A simple classifier for twitter bot accounts based on Random Forest Algorithm
 
 See our [Methodology](./explanation.md) for bot detection
 
-# Install
+## Install for common usage with pip
+
+Create a virtual env if needed
+
+```
+pip3 install virtualenv
+virtualenv -p python3 social-networks-bot-finder
+source social-networks-bot-finder/bin/activate
+```
+
+Install
+
+```
+pip3 install social-networks-bot-finder
+```
+
+Then you can launch `botfinder`
+
+## Install for development
 
 ```
 git clone https://github.com/ambanum/social-networks-bot-finder
 cd social-networks-bot-finder
 ```
 
-## Virtual env
+### Virtual env
 
 We strongly recommend that you use a virtual env for any development in python
 
@@ -23,7 +41,7 @@ virtualenv -p python3 social-networks-bot-finder
 source social-networks-bot-finder/bin/activate
 ```
 
-## for common usage
+### build on local
 
 If you do not want to develop but just use the software, do
 
@@ -33,7 +51,7 @@ If you do not want to develop but just use the software, do
 
 Then you can use `botfinder` as an executable command
 
-## for development
+### use for development with no build
 
 ```
 pip3 install -r requirements.txt
@@ -93,6 +111,22 @@ will return
     "description_length": -0.009
   }
 }
+```
+
+# Deployment
+
+This package is deployed on pypi as a package named `social-networks-bot-finder`. So that it can be installed using pip
+
+## Authentication on pyPi
+
+```
+keyring set https://upload.pypi.org/legacy/ username
+```
+
+## Deploy a new release
+
+```
+./release.sh
 ```
 
 # Troubleshooting

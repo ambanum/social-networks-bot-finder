@@ -15,7 +15,7 @@ source social-networks-bot-finder/bin/activate
 pip3 install -r requirements.txt
 
 # install command line
-python3 setup.py install
+pip3 install .
 
 # Launch command to show it worked and how to use
 echo " "

@@ -8,9 +8,16 @@ import json
 import pandas as pd
 import joblib
 import os
+import tempfile
 from shap import TreeExplainer
 
-model = joblib.load("botfinder/random_forest.joblib")
+tmp_directory = tempfile.gettempdir()
+package_directory = os.path.dirname(os.path.abspath(__file__))
+
+ramdom_forest_file = os.path.join(package_directory, 'random_forest.joblib')
+
+
+model = joblib.load(ramdom_forest_file)
 explainer = TreeExplainer(model)
 
 dicSnscrapeToAPI = {
@@ -97,11 +104,12 @@ def isBot(df):
 
 def findbot(name):
     """Also works with the id"""
+    tmp_file = tmp_directory + "/user.json"
     os.system(
-        f"snscrape --with-entity --max-results 0 --jsonl twitter-user {name} > user.json"
+        f"snscrape --with-entity --max-results 0 --jsonl twitter-user {name} > {tmp_file}"
     )
-    df = pd.read_json("user.json", lines=True)
-    os.remove("user.json")
+    df = pd.read_json(tmp_file, lines=True)
+    os.remove(tmp_file)
     return isBot(df)
 
 

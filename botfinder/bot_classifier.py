@@ -3,13 +3,16 @@ Created on Tue Jun 15 15:02:23 2021
 
 @author: barre
 """
-import config
-import json
-import pandas as pd
-import joblib
-import os
-from shap import TreeExplainer
+
 import datetime
+import json
+import os
+
+import joblib
+import pandas as pd
+from shap import TreeExplainer
+
+import config
 
 
 ramdom_forest_file = config.PACKAGE_INSTALL_DIR / "random_forest.joblib"

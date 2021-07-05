@@ -17,7 +17,6 @@ import config
 
 ramdom_forest_file = config.PACKAGE_INSTALL_DIR / "random_forest.joblib"
 
-
 model = joblib.load(ramdom_forest_file)
 explainer = TreeExplainer(model)
 
@@ -26,10 +25,6 @@ def age(date):
     u = pd.Timestamp(date, tz=None)
     u = u.tz_convert(None)
     return (pd.Timestamp.today() - u).days + 1
-
-
-def length(string):
-    return len(string)
 
 
 def nbdigits(string):
@@ -47,11 +42,11 @@ def augmentdf(df):
         df["followers_count"] + 1
     )
     output["followers_friend_ratio"] = df["followers_count"] / (df["friends_count"] + 1)
-    output["name_length"] = df["name"].apply(length)
-    output["screenname_length"] = df["screen_name"].apply(length)
+    output["name_length"] = df["name"].apply(len)
+    output["screenname_length"] = df["screen_name"].apply(len)
     output["name_digits"] = df["name"].apply(nbdigits)
     output["screen_name_digits"] = df["screen_name"].apply(nbdigits)
-    output["description_length"] = df["description"].apply(length)
+    output["description_length"] = df["description"].apply(len)
     return output
 
 

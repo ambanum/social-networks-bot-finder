@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
-
 import click
+
 from botfinder.bot_classifier import findbot, findbot_rawjson, findbot_filename
 from botfinder.version import __version__
+
 
 @click.command()
 @click.option("--username", required=False, help="a twitter username")
@@ -15,9 +16,7 @@ from botfinder.version import __version__
 @click.option(
     "--jsonfile", required=False, help="a json file path containing a snscrape user"
 )
-@click.option(
-    '-v', '--version', is_flag=True, help="get version of the package"
-)
+@click.option("-v", "--version", is_flag=True, help="get version of the package")
 def main(rawjson, username, jsonfile, version):
     """Command line utility to estimate the probability of a twitter user to be a bot"""
     if rawjson:

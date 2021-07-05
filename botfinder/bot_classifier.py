@@ -12,7 +12,7 @@ import joblib
 import pandas as pd
 from shap import TreeExplainer
 
-import config
+from botfinder import config
 
 
 ramdom_forest_file = config.PACKAGE_INSTALL_DIR / "random_forest.joblib"

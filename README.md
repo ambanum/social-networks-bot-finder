@@ -80,7 +80,7 @@ botfinder --jsonfile ./filepath.json
 ## Example
 
 ```
-botfinder --name ambnum
+botfinder --username ambnum
 ```
 
 will return
@@ -111,6 +111,20 @@ will return
     "description_length": -0.009
   }
 }
+```
+
+## Using Docker
+
+```sh
+# build and run image yourself
+docker build --tag botfinder:latest .
+docker run -it -d botfinder
+
+# or pull from Dockerhub
+#TODO
+
+# execute your command in the container
+docker exec -it botfinder botfinder --username ambnum
 ```
 
 # Deployment

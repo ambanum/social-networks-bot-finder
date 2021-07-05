@@ -166,3 +166,31 @@ ERROR: Could not detect requirement name for 'git+https://github.com/JustAnother
 ```
 In requirements.txt file, you have to add `#egg=your_package_name` to github repository url.
 In this case, replace `git+https://github.com/JustAnotherArchivist/snscrape.git`by `git+https://github.com/JustAnotherArchivist/snscrape.git#egg=snscrape`
+
+## Install on M1/ARM processors
+
+As of today, the easiest way to install the package and its dependencies on a M1/ARM chip is via [`conda`](https://conda.io/)
+
+#### Install `conda`
+We recommend [downloading and installing](https://docs.conda.io/en/latest/miniconda.html#installing) the python 3.9 version of conda. The `miniconda` distribution is enough for our purpose.
+
+#### Navigate to root of repository and pull the latest changes
+
+#### Create a new conda environment
+
+`conda create --name botfinder python=3.9 -f environment.yml`
+
+and activate it :
+
+`conda activate botfinder`
+
+#### Install botfinder
+
+`pip install -e .`
+
+#### Check that it worked
+
+```sh
+cd botfinder
+botfinder --help
+```

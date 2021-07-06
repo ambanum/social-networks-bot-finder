@@ -115,16 +115,31 @@ will return
 
 ## Using Docker
 
+### "regular" image
+
 ```sh
 # build and run image yourself
-docker build --tag botfinder:latest .
-docker run -it -d botfinder
+docker build --tag botfinder:latest -f Dockerfile .
+docker run -it -d --rm botfinder
 
 # or pull from Dockerhub
 #TODO
 
 # execute your command in the container
 docker exec -it botfinder botfinder --username ambnum
+```
+
+### ARM/M1 image (using conda)
+
+Note that you need to activate the conda env everytime you want to use `docker exec` which slows things down... See [this article](https://pythonspeed.com/articles/activate-conda-dockerfile) for a description of the issue.
+
+```sh
+# build and run image yourself
+docker build  --tag botfinder:latest -f Dockerfile.conda .
+docker run -it -d --name botfinder --rm botfinder:latest
+
+# execute your command in the container
+docker exec -it botfinder conda init bash && conda activate botfinder && botfinder --username ambnum
 ```
 
 # Deployment
@@ -192,7 +207,7 @@ We recommend [downloading and installing](https://docs.conda.io/en/latest/minico
 
 #### Create a new conda environment
 
-`conda create --name botfinder python=3.9 -f environment.yml`
+`conda env create --name botfinder python=3.9 -f environment.yml`
 
 and activate it :
 

@@ -215,11 +215,10 @@ and activate it :
 
 #### Install botfinder
 
-`pip install -e .`
+`python -m pip install -e .`
 
 #### Check that it worked
 
 ```sh
-cd botfinder
 botfinder --help
 ```

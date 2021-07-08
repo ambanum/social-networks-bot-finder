@@ -29,7 +29,7 @@ We use 21 different features :
 - friends_growth_rate : the growth rate of friends acquired - this is equal to : friends_count/age
 - listed_count_growth_rate : the growth rate of list - this is equal to : listed_count/age
 - friends_followers_ratio : number of friends per follower - this is equal to friends_count/(followers_count+1)
-- followers_friends_ratio : number of followers per friend - this is equal to followers_count/(friends_count+1) (the redundancy with the friends_followers_ratio feature is intentional : the reason being that if the number of friends is dwarfed by the number of followers, the friends_followers_ratio vanishes and this information would be more schematic).
+- followers_friends_ratio : number of followers per friend - this is equal to followers_count/(friends_count+1)
 
 
 Based on the features observed in the data, we follow the Random Forest classifier algorithm : we creates several (in our case 250) Decision Trees (https://en.wikipedia.org/wiki/Decision_tree_learning) to help us classify unknown (that is : unlabeled) Twitter accounts. Each Decision Tree is trained using only a subset of the training data (this technique is called _bootstrap aggregating_).
@@ -78,7 +78,8 @@ Pour calculer la probabilité d’un compte donné d’être un bot, nous entra�
  
 - friends_growth_rate : le taux de croissance du nombre d’abonnements – à savoir le ratio nombre d’abonnements/ âge du compte
 - listed_count_growth_rate : le taux de croissance du nombre de listes auxquelles appartient le compte – à savoir le ratio nombre de listes/ âge du compte
-- friends_followers_ratio : le ratio nombre d’abonnements/(nombre d’abonnés +1) - followers_friends_ratio : le ratio nombre d’abonnés/(nombre d’abonnements +1) – la redondance avec le ratio nombre d’abonnements/(nombre d’abonnés +1) est intentionnelle. En effet, supposons que nous n’ayons que le friends_followers_ratio: si le nombre d’abonnements est 10 fois supérieur au nombre d’abonnés, on obtient 0.10 ; s’il est 100 fois supérieur, 0.01 : du fait de la proximité de ces deux nombres, il peut être plus difficile de séparer les comptes selon une information qui est pourtant pertinente.)
+- friends_followers_ratio : le ratio nombre d’abonnements/(nombre d’abonnés +1) 
+- followers_friends_ratio : le ratio nombre d’abonnés/(nombre d’abonnements +1)
 
 Sur la base des caractéristiques observées dans les données, nous suivons l'algorithme de classification Random Forest : nous créons plusieurs (dans notre cas 250) arbres de décision (https://en.wikipedia.org/wiki/Decision_tree_learning) pour nous aider à classer les nouveaux comptes Twitter non étiquetés. Chaque arbre de décision est entraîné en utilisant seulement un sous-ensemble des données (une technique qui porte le nom de _bootstrap aggregating_).
 

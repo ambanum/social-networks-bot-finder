@@ -80,7 +80,7 @@ botfinder --jsonfile ./filepath.json
 ## Example
 
 ```
-botfinder --name ambnum
+botfinder --username ambnum
 ```
 
 will return
@@ -111,6 +111,35 @@ will return
     "description_length": -0.009
   }
 }
+```
+
+## Using Docker
+
+### "regular" image
+
+```sh
+# build and run image yourself
+docker build --tag botfinder:latest -f Dockerfile .
+docker run -it -d --rm botfinder
+
+# or pull from Dockerhub
+#TODO
+
+# execute your command in the container
+docker exec -it botfinder botfinder --username ambnum
+```
+
+### ARM/M1 image (using conda)
+
+Note that you need to activate the conda env everytime you want to use `docker exec` which slows things down... See [this article](https://pythonspeed.com/articles/activate-conda-dockerfile) for a description of the issue.
+
+```sh
+# build and run image yourself
+docker build  --tag botfinder:latest -f Dockerfile.conda .
+docker run -it -d --name botfinder --rm botfinder:latest
+
+# execute your command in the container
+docker exec -it botfinder conda init bash && conda activate botfinder && botfinder --username ambnum
 ```
 
 # Deployment
@@ -166,3 +195,30 @@ ERROR: Could not detect requirement name for 'git+https://github.com/JustAnother
 ```
 In requirements.txt file, you have to add `#egg=your_package_name` to github repository url.
 In this case, replace `git+https://github.com/JustAnotherArchivist/snscrape.git`by `git+https://github.com/JustAnotherArchivist/snscrape.git#egg=snscrape`
+
+## Install on M1/ARM processors
+
+As of today, the easiest way to install the package and its dependencies on a M1/ARM chip is via [`conda`](https://conda.io/)
+
+#### Install `conda`
+We recommend [downloading and installing](https://docs.conda.io/en/latest/miniconda.html#installing) the python 3.9 version of conda. The `miniconda` distribution is enough for our purpose.
+
+#### Navigate to root of repository and pull the latest changes
+
+#### Create a new conda environment
+
+`conda env create --name botfinder python=3.9 -f environment.yml`
+
+and activate it :
+
+`conda activate botfinder`
+
+#### Install botfinder
+
+`python -m pip install -e .`
+
+#### Check that it worked
+
+```sh
+botfinder --help
+```

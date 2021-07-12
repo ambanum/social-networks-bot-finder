@@ -150,6 +150,7 @@ We are using `twine` for this
 ```
 pip install twine
 npm install -g semver # for consistent package number generation
+pip install gitchangelog # to generate changelog automatically based on git commits
 ```
 
 ## Authentication on pyPi

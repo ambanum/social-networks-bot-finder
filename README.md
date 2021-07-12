@@ -1,3 +1,5 @@
+<img src="https://disinfo.quaidorsay.fr/assets/img/logo.png" width="140">
+
 # social-networks-bot-finder
 
 A simple classifier for twitter bot accounts based on Random Forest Algorithm

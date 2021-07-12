@@ -18,7 +18,7 @@ if [[ ! "$NEW_VERSION_TYPE" =~ ^(patch|minor|major)$ ]]; then
     exit 1
 fi
 
-CURRENT_VERSION=$(botfinder -v)
+CURRENT_VERSION=$(./botfinder-dev.py -v)
 NEW_VERSION=$(semver $CURRENT_VERSION -i $NEW_VERSION_TYPE)
 
 echo "Bumping from $CURRENT_VERSION to $NEW_VERSION"

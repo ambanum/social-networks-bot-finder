@@ -6,3 +6,5 @@ dist
 *.egg-info
 social-networks-bot-finder
 botfinder/version.py.bak
+botfinder/.!*
+

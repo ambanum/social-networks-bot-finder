@@ -77,7 +77,7 @@ def findbot(name):
     df = pd.read_json(tmp_file, lines=True)
     os.remove(tmp_file)
     t0 = datetime.datetime.now()
-    return is_bot(df), datetime.datetime.now() - t0
+    return is_bot(df)
 
 
 def findbot_filename(filename):

@@ -193,6 +193,7 @@ source social-networks-bot-finder/bin/activate
 ```
 ERROR: Could not detect requirement name for 'git+https://github.com/JustAnotherArchivist/snscrape.git', please specify one with #egg=your_package_name
 ```
+
 In requirements.txt file, you have to add `#egg=your_package_name` to github repository url.
 In this case, replace `git+https://github.com/JustAnotherArchivist/snscrape.git`by `git+https://github.com/JustAnotherArchivist/snscrape.git#egg=snscrape`
 
@@ -201,6 +202,7 @@ In this case, replace `git+https://github.com/JustAnotherArchivist/snscrape.git`
 As of today, the easiest way to install the package and its dependencies on a M1/ARM chip is via [`conda`](https://conda.io/)
 
 #### Install `conda`
+
 We recommend [downloading and installing](https://docs.conda.io/en/latest/miniconda.html#installing) the python 3.9 version of conda. The `miniconda` distribution is enough for our purpose.
 
 #### Navigate to root of repository and pull the latest changes
@@ -221,4 +223,16 @@ and activate it :
 
 ```sh
 botfinder --help
+```
+
+## Command line is too slow
+
+In order to profile the execution of the command line, you can use a profiler named `tuna`
+
+```
+pip install tuna
+
+time python -X importtime botfinder-dev.py --rawjson '{"_id":"60d352cf13b64d38e9a184dd","id":"1106210510058463233","platformId":"twitter","created":"2019-03-14T15:08:32.000Z","createdAt":"2021-06-23T15:27:11.019Z","description":"Social Enterprise Digital Marketing Agency - Empowering our staff with knowledge & skills to provide the best quality marketing services  WEB | PPC | SEO & more","displayname":"Ground Up Digital","favouritesCount":500,"followersCount":583,"friendsCount":592,"linkUrl":"https://groundup.digital/","listedCount":4,"location":"Leeds","mediaCount":164,"profileImageUrl":"https://pbs.twimg.com/profile_images/1106606764584288256/vQ6Fs2y__normal.png","statusesCount":541,"updatedAt":"2021-06-23T15:27:11.019Z","username":"GroundUpDigital","verified":false}' 2> import.log
+
+tuna import.log
 ```

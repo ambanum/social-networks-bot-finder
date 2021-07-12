@@ -76,7 +76,6 @@ def findbot(name):
     )
     df = pd.read_json(tmp_file, lines=True)
     os.remove(tmp_file)
-    t0 = datetime.datetime.now()
     return is_bot(df)
 
 
@@ -87,5 +86,12 @@ def findbot_filename(filename):
 
 def findbot_rawjson(rawjson):
     js = json.loads(rawjson)
-    df = pd.DataFrame.from_dict(js, orient="index").T
-    return is_bot(df)
+    if isinstance(js, list):
+        results = []
+        for f in js:
+            df = pd.DataFrame.from_dict(f, orient="index").T
+            results.append(json.loads(is_bot(df)))
+        return json.dumps(results)
+    else:
+        df = pd.DataFrame.from_dict(js, orient="index").T
+        return is_bot(df)

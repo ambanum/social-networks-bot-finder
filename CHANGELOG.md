@@ -2,6 +2,15 @@ Changelog
 =========
 
 
+v1.1.1 (2021-07-12)
+-------------------
+
+New
+~~~
+- Feat: add automatic generation of changelog when releasing new
+  version. [Martin Ratinaud]
+
+
 v1.1.0 (2021-07-12)
 -------------------
 

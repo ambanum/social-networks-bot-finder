@@ -2,6 +2,19 @@ Changelog
 =========
 
 
+v1.2.0 (2021-07-13)
+-------------------
+
+New
+~~~
+- Feat: support json files with several users to batch process data.
+  [Martin Ratinaud]
+
+Other
+~~~~~
+- Docs: add contributing guide. [Martin Ratinaud]
+
+
 v1.1.1 (2021-07-12)
 -------------------
 

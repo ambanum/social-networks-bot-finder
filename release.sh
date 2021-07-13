@@ -9,6 +9,7 @@ rm -Rf __pycache__
 
 NEW_VERSION_TYPE=$1
 
+source social-networks-bot-finder/bin/activate
 if [ -z $1 ]; then
     read -p 'version (patch|minor|major): ' NEW_VERSION_TYPE
 fi
@@ -20,6 +21,11 @@ fi
 
 CURRENT_VERSION=$(./botfinder-dev.py -v)
 NEW_VERSION=$(semver $CURRENT_VERSION -i $NEW_VERSION_TYPE)
+
+if [[ ! "$CURRENT_VERSION" ]]; then
+    echo "CURRENT_VERSION does not exist"
+    exit 1
+fi
 
 echo "Bumping from $CURRENT_VERSION to $NEW_VERSION"
 # ".bak" is here for MacOS purpose, if we remove it does not work anymore

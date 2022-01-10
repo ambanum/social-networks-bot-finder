@@ -2,6 +2,16 @@ Changelog
 =========
 
 
+v1.2.1 (2022-01-10)
+-------------------
+
+Changes
+~~~~~~~
+- Chore: update requirements versions. [Martin Ratinaud]
+- Chore: make release process more friendly and error proof. [Martin
+  Ratinaud]
+
+
 v1.2.0 (2021-07-13)
 -------------------
 

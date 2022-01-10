@@ -21,10 +21,11 @@ setuptools.setup(
     use_scm_version=False,
     include_package_data=True,
     install_requires=[
-        "click==8.0.1",
-        "joblib==1.0.1",
-        "pandas==1.2.5",
-        "shap==0.39.0",
+        "click==8.0.3",
+        "joblib==1.1.0",
+        "pandas==1.3.5",
+        "shap==0.40.0",
+        "scikit-learn==0.24.2",
     ],
     dependency_links=[
         "git+https://github.com/JustAnotherArchivist/snscrape.git"

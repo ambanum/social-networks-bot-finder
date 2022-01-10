@@ -2,6 +2,14 @@ Changelog
 =========
 
 
+v1.2.3 (2022-01-10)
+-------------------
+
+Changes
+~~~~~~~
+- Chore: add new version to setup also. [Martin Ratinaud]
+
+
 v1.2.2 (2022-01-10)
 -------------------
 

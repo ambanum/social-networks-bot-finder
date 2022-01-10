@@ -2,6 +2,28 @@ Changelog
 =========
 
 
+v1.2.2 (2022-01-10)
+-------------------
+
+Changes
+~~~~~~~
+- Chore: update requirements versions. [Martin Ratinaud]
+
+Fix
+~~~
+- Use specific version of scikit-learn to prevent prediction errors -
+  Fixes #8. [Martin Ratinaud]
+
+Other
+~~~~~
+- Delete graph directory. [Antoine-Barre]
+- Merge pull request #7 from ambanum/Antoine-Barre-graph. [Antoine-
+  Barre]
+
+  Add graph features
+- Add files via upload. [Antoine-Barre]
+
+
 v1.2.1 (2022-01-10)
 -------------------
 
@@ -48,7 +70,7 @@ Changes
   [Martin Ratinaud]
 
 
-v1.0.1 (2021-07-12)
+v0.1.1 (2021-07-12)
 -------------------
 
 Fix

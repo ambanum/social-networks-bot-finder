@@ -122,7 +122,7 @@ will return
 ```sh
 # build and run image yourself
 docker build --tag botfinder:latest -f Dockerfile .
-docker run -it -d --rm botfinder
+docker run -it -d --name botfinder --rm botfinder
 
 # or pull from Dockerhub
 #TODO
@@ -138,10 +138,10 @@ Note that you need to activate the conda env everytime you want to use `docker e
 ```sh
 # build and run image yourself
 docker build  --tag botfinder:latest -f Dockerfile.conda .
-docker run -it -d --name botfinder --rm botfinder:latest
+docker run -it -d --name botfinder-conda --rm botfinder:latest
 
 # execute your command in the container
-docker exec -it botfinder conda init bash && conda activate botfinder && botfinder --username ambnum
+docker exec -it botfinder-conda conda init bash && conda activate botfinder && botfinder --username ambnum
 ```
 
 # Deployment

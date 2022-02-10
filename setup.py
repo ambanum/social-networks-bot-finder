@@ -26,6 +26,7 @@ setuptools.setup(
         "pandas==1.3.5",
         "shap==0.40.0",
         "scikit-learn==0.24.2",
+        "numpy==1.21.5"
     ],
     dependency_links=[
         "git+https://github.com/JustAnotherArchivist/snscrape.git"
